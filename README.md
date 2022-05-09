@@ -1,4 +1,4 @@
-# Devman notification bot
+# Devman review notifications bot
 
 This program uses [Devman](https://dvmn.org) API to check whether any of the submitted tasks have been reviewed, and sends user a notification via a telegram bot.
 
