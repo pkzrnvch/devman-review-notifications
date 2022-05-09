@@ -54,20 +54,16 @@ def main():
             sleep(10)
             continue
         except requests.ReadTimeout:
-            print('readtime')
             continue
         except requests.ConnectionError:
-            print('connect.err')
             sleep(60)
             continue
         if response['status'] == 'found':
-            print(response)
             lesson_review = response['new_attempts'][0]
             message = form_message(lesson_review)
             bot.send_message(text=message, chat_id=chat_id)
             timestamp = response['last_attempt_timestamp']
         elif response['status'] == 'timeout':
-            print(response)
             timestamp = response['timestamp_to_request']
 
 
