@@ -7,17 +7,6 @@ import telegram
 from dotenv import load_dotenv
 
 
-def devman_long_polling(devman_token, timestamp):
-    url = 'https://dvmn.org/api/long_polling/'
-    headers = {'Authorization': f'Token {devman_token}'}
-    payload = {}
-    if timestamp:
-        payload = {'timestamp': timestamp}
-    response = requests.get(url, headers=headers, params=payload, timeout=150)
-    response.raise_for_status()
-    return response.json()
-
-
 def form_message(lesson_review):
     review_successful = not lesson_review['is_negative']
     lesson_title = lesson_review['lesson_title']
@@ -46,10 +35,15 @@ def main():
     tg_bot_token = os.environ.get('TG_BOT_TOKEN')
     chat_id = os.environ.get('TG_CHAT_ID')
     bot = telegram.Bot(token=tg_bot_token)
-    timestamp = 0
+    timestamp = None
+    url = 'https://dvmn.org/api/long_polling/'
+    headers = {'Authorization': f'Token {devman_token}'}
     while True:
         try:
-            response = devman_long_polling(devman_token, timestamp)
+            payload = {'timestamp': timestamp}
+            response = requests.get(url, headers=headers, params=payload, timeout=150)
+            response.raise_for_status()
+            review = response.json()
         except requests.HTTPError:
             sleep(10)
             continue
@@ -58,13 +52,13 @@ def main():
         except requests.ConnectionError:
             sleep(60)
             continue
-        if response['status'] == 'found':
-            lesson_review = response['new_attempts'][0]
-            message = form_message(lesson_review)
+        if review['status'] == 'found':
+            review_details = review['new_attempts'][0]
+            message = form_message(review_details)
             bot.send_message(text=message, chat_id=chat_id)
-            timestamp = response['last_attempt_timestamp']
-        elif response['status'] == 'timeout':
-            timestamp = response['timestamp_to_request']
+            timestamp = review['last_attempt_timestamp']
+        elif review['status'] == 'timeout':
+            timestamp = review['timestamp_to_request']
 
 
 if __name__ == '__main__':
