@@ -4,7 +4,9 @@ This program uses [Devman](https://dvmn.org) API to check whether any of the sub
 
 ### How to install
 
-Create an `.env` file in the project directory. Create a new telegram bot through a BotFather and assign its token to `TG_TOKEN` variable. In case you have an account, you can find your token for Devman API [here](https://dvmn.org/api/docs/), assign it to `DEVMAN_TOKEN` variable. Send a message to [@userinfobot](https://t.me/userinfobot) to get your chat_id, assign it to `TG_CHAT_ID` variable. 
+- Create an `.env` file in the project directory. Create a new telegram bot through a BotFather and assign its token to `TG_TOKEN` variable. 
+- In case you have an account, you can find your token for Devman API [here](https://dvmn.org/api/docs/), assign it to `DEVMAN_TOKEN` variable. 
+- Send a message to [@userinfobot](https://t.me/userinfobot) to get your chat_id, assign it to `TG_CHAT_ID` variable. 
 
 Example of an `.env` file:
 
