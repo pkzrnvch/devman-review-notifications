@@ -8,6 +8,9 @@ import telegram
 from dotenv import load_dotenv
 
 
+logger = logging.getLogger(__file__)
+
+
 class TelegramLogsHandler(logging.Handler):
 
     def __init__(self, tg_bot, chat_id):
@@ -48,7 +51,6 @@ def main():
     tg_bot_token = os.environ.get('TG_BOT_TOKEN')
     chat_id = os.environ.get('TG_CHAT_ID')
     bot = telegram.Bot(token=tg_bot_token)
-    logger = logging.getLogger('Logger')
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(bot, chat_id))
     logger.info('Бот запущен!')
