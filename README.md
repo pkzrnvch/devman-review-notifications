@@ -11,9 +11,9 @@ This program uses [Devman](https://dvmn.org) API to check whether any of the sub
 Example of an `.env` file:
 
 ```
-TG_BOT_TOKEN="YOUR_TOKEN"
-DEVMAN_TOKEN="YOUR_TOKEN"
-TG_CHAT_ID="YOUR_CHAT_ID"
+TG_BOT_TOKEN=YOUR_TOKEN
+DEVMAN_TOKEN=YOUR_TOKEN
+TG_CHAT_ID=YOUR_CHAT_ID
 ```
 
 Python3 should already be installed. Use pip (or pip3, in case of conflict with Python2) to install dependencies:
@@ -23,9 +23,21 @@ pip install -r requirements.txt
 
 ### Usage
 
-To run the programm use the following command from the project directory:
+To run the program use the following command from the project directory:
 ```
 python main.py
+```
+
+### To run with Docker
+
+- Install [Docker](https://www.docker.com/products/docker-desktop/)
+- Use the following command from the project directory to create image:
+```
+docker build -t notifications-bot .
+```
+- After that, another one to run a container:
+```
+docker run --env-file <path_to_env_file> devman-notifications-bot
 ```
 
 ### Project Goals
